@@ -3,9 +3,14 @@
 #include <WiFi.h>
 #include "lvgl.h"
 
+#include "secrets.h"
+
+char ssid[] = SECRET_SSID;
+char psk[] = SECRET_PSK;
+
 void connect_wifi() {
 
-    WiFi.begin("secret-SSID", "even-more-secret-PSK");
+    WiFi.begin(ssid, psk);
 
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);

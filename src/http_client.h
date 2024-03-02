@@ -7,17 +7,12 @@
 
 static HTTPClient httpClient;
 
-void http_init() {
-    httpClient.begin("http://alarmpi/relais1/state");
-}
 
-void http_stop() {
-    httpClient.end();
-}
+void http_get() {
 
-void http_get_example() {
+    lv_textarea_add_text(ui_TextArea1, "do http request\n");
 
-    lv_textarea_add_text(ui_TextArea1, "do http request\n");  
+    httpClient.begin("192.168.178.69", 8090, "/relais1/state");
 
     int httpCode = httpClient.GET();
 
@@ -65,7 +60,11 @@ void http_get_example() {
             // res &= (buf[1] == 'a');
             // res &= (buf[2] == 'l');
             res &= msgpck_read_bool(&httpClient.getStream(), &level);
-            if(!res) return;
+            if(!res) {
+                lv_textarea_add_text(ui_TextArea1, "msgpack read failed\n");
+                httpClient.end();
+                return;
+            }
 
             if(level) {
                 lv_textarea_add_text(ui_TextArea1, "relais1 state is on\n");
@@ -78,4 +77,5 @@ void http_get_example() {
         //Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
     }
 
+    httpClient.end();
 }

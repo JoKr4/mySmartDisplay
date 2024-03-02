@@ -32,7 +32,7 @@ void setup()
 
   connect_wifi();
 
-  http_get_example();
+  http_get();
 }
 
 void loop()
