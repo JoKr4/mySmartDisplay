@@ -7,6 +7,8 @@
 // #include "driver/uart.h"
 // #include "uart.h"
 #include <Arduino.h> // log_d
+//#include "http_client.h"
+//#include "msgpck.h"
 
 // static uint8_t data[BUF_SIZE] = "Button1 clicked\n";
 
@@ -14,4 +16,5 @@ void onButton1Click(lv_event_t * e)
 {
   log_i("Button1 clicked\n");
   //uart_write_bytes(UART_PORT, (const char *) data, 17);
+  //msgpck_write_map_header(&http, 2);
 }
