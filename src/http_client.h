@@ -10,16 +10,16 @@ static HTTPClient httpClient;
 
 void http_get() {
 
-    lv_textarea_add_text(ui_TextArea1, "do http request\n");
+    //lv_textarea_add_text(ui_TextArea1, "do http request\n");
 
-    httpClient.begin("192.168.178.69", 8090, "/relais1/state");
+    httpClient.begin("192.168.178.69", 8090, "/relais/states");
 
     int httpCode = httpClient.GET();
 
     if(httpCode > 0) {
         if(httpCode == HTTP_CODE_OK) {
             //String payload = http.getString();
-            lv_textarea_add_text(ui_TextArea1, "http ok\n");
+            //lv_textarea_add_text(ui_TextArea1, "http ok\n");
 
             // https://registry.platformio.org/libraries/heads-project/Message%20Pack%20for%20Arduino/examples/led_controller/led_controller.ino
 
@@ -29,21 +29,18 @@ void http_get() {
 
             // uint8_t i;
             // char buf[8];
-            // uint32_t map_size;
+            uint32_t array_size;
             // uint32_t r_size;
             // uint8_t pin;
-            bool level;
+            //bool level;
 
-            // res &= msgpck_map_next(&httpClient.getStream());
-            // if(!res) return;
+            res &= msgpck_array_next(&httpClient.getStream());
+            if(!res) return;
 
-            // res &= msgpck_map_next(&httpClient.getStream());
-            // if(!res) return;
+            res &= msgpck_read_array_size(&httpClient.getStream(), &array_size);
+            if(!res) return;
 
-            // res &= msgpck_read_map_size(&httpClient.getStream(), &map_size);
-            // if(!res) return;
-
-            // res &= (map_size == 2);
+            res &= (array_size == 6);
             // res &= msgpck_read_string(&httpClient.getStream(), buf, 3, &r_size);
             // if(!res) return;
 
@@ -59,21 +56,24 @@ void http_get() {
             // res &= (buf[0] == 'v');
             // res &= (buf[1] == 'a');
             // res &= (buf[2] == 'l');
-            res &= msgpck_read_bool(&httpClient.getStream(), &level);
-            if(!res) {
-                lv_textarea_add_text(ui_TextArea1, "msgpack read failed\n");
-                httpClient.end();
-                return;
+
+            bool all[array_size];
+
+            for(int i = 0; i < array_size; i++) {
+                res &= msgpck_read_bool(&httpClient.getStream(), &all[i]);
+                if(!res) {
+                    //lv_textarea_add_text(ui_TextArea1, "msgpack read failed\n");
+                }
             }
 
-            if(level) {
-                lv_textarea_add_text(ui_TextArea1, "relais1 state is on\n");
-            } else {
-                lv_textarea_add_text(ui_TextArea1, "relais1 state is off\n");
-            }
+            char buffer[30];
+            sprintf(buffer, "relais states: %d %d %d %d %d %d \n", all[0], all[1], all[2], all[3], all[4], all[5]);
+
+            //lv_textarea_add_text(ui_TextArea1, buffer);
+       
         }
     } else {
-        lv_textarea_add_text(ui_TextArea1, "http failed\n");
+        //lv_textarea_add_text(ui_TextArea1, "http failed\n");
         //Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
     }
 

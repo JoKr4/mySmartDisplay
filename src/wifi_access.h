@@ -19,5 +19,5 @@ void connect_wifi() {
     auto ip = WiFi.localIP().toString();
     ip += "\n";
 
-    lv_textarea_add_text(ui_TextArea1, ip.c_str());
+    //lv_textarea_add_text(ui_TextArea1, ip.c_str());
 }
