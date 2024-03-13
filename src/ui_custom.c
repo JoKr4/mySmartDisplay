@@ -12,8 +12,8 @@ void ui_screen_buttons_init(void)
     lv_obj_align(cont, LV_ALIGN_TOP_MID, 0, 10);
     lv_obj_set_layout(cont, LV_LAYOUT_GRID);
 
-    static int32_t col_dsc[] = {100, 100, LV_GRID_TEMPLATE_LAST};
-    static int32_t row_dsc[] = {80, 80, LV_GRID_TEMPLATE_LAST};
+    static lv_coord_t col_dsc[] = {100, 100, LV_GRID_TEMPLATE_LAST};
+    static lv_coord_t row_dsc[] = {80, 80, LV_GRID_TEMPLATE_LAST};
     lv_obj_set_grid_dsc_array(cont, col_dsc, row_dsc);
 
     lv_obj_t * label;
