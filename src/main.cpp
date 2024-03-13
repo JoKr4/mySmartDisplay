@@ -16,9 +16,9 @@ void setup()
 
   ui_init();
 
-  // connect_wifi();
+  connect_wifi();
 
-  // http_get();
+  http_get();
 }
 
 void loop()

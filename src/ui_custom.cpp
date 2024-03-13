@@ -3,6 +3,13 @@
 lv_obj_t * ui_ScreenButtons;
 lv_obj_t * ui_TextArea1;
 
+void ui_writeLog(const std::string& message)
+{
+    auto ended = message;
+    ended += "\n";
+    lv_textarea_add_text(ui_TextArea1, ended.c_str());
+}
+
 void ui_screen_buttons_init(void)
 {
     ui_ScreenButtons = lv_obj_create(NULL);
@@ -21,6 +28,7 @@ void ui_screen_buttons_init(void)
     lv_obj_set_grid_cell(ui_TextArea1, LV_GRID_ALIGN_STRETCH, 0, 1,
                                        LV_GRID_ALIGN_STRETCH, 0, 1);
     lv_textarea_set_placeholder_text(ui_TextArea1, "Placeholder...");
+    lv_obj_clear_flag(ui_TextArea1, LV_OBJ_FLAG_CLICKABLE);
 
     // button grid
     lv_obj_t * cont = lv_obj_create(wholeScreen);
