@@ -10,6 +10,14 @@ void ui_writeLog(const std::string& message)
     lv_textarea_add_text(ui_TextArea1, ended.c_str());
 }
 
+void ui_event_Button(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    //const char * txt = lv_btnmatrix_get_btn_text(obj, lv_btnmatrix_get_selected_btn(obj));
+    ui_writeLog("button clicked");
+}
+
 void ui_screen_buttons_init(void)
 {
     ui_ScreenButtons = lv_obj_create(NULL);
@@ -56,8 +64,8 @@ void ui_screen_buttons_init(void)
         label = lv_label_create(obj);
         lv_label_set_text_fmt(label, "c%d, r%d", col, row);
         lv_obj_center(label);
+        lv_obj_add_event_cb(obj, ui_event_Button, LV_EVENT_PRESSED, NULL);
     }
-
 }
 
 void ui_init(void) {
