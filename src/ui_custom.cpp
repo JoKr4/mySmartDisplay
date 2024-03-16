@@ -1,4 +1,5 @@
 #include "ui_custom.h"
+#include "http_client.h"
 
 lv_obj_t * ui_ScreenButtons;
 lv_obj_t * ui_TextArea1;
@@ -16,6 +17,7 @@ void ui_event_Button(lv_event_t * e)
     uint32_t id = lv_btnmatrix_get_selected_btn(target);
     auto txt = std::string(lv_btnmatrix_get_btn_text(target, id));
     ui_writeLog("clicked button "+txt);
+    http_req_relais_toggle(id);
 }
 
 void ui_screen_buttons_init(void)

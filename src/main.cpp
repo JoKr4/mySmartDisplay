@@ -18,7 +18,7 @@ void setup()
 
   connect_wifi();
 
-  http_get();
+  http_req_relais_states();
 }
 
 void loop()
