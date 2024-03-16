@@ -4,6 +4,7 @@
 #include "uart.h"
 #include "wifi_access.h"
 #include "http_client.h"
+#include "websocket_client.h"
 
 void setup()
 {
@@ -18,10 +19,13 @@ void setup()
 
   connect_wifi();
 
-  http_req_relais_states();
+  //http_req_relais_states();
+
+  init_websocket_client();
 }
 
 void loop()
 {
   lv_timer_handler();
+  loop_websocket_client();
 }
