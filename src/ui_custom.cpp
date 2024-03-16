@@ -46,9 +46,9 @@ void ui_screen_buttons_init(void)
                                  LV_GRID_ALIGN_STRETCH, 1, 1);
     //lv_obj_clear_flag(matrix, LV_OBJ_FLAG_SCROLLABLE);
     static const char * btnm_map[] = {
-        "1", "2", "\n",
-        "3", "4", "\n", 
-        "5", "6", ""
+        "3D Printer", "AmbiL Decke", "\n",
+        "AmbiL TV",   "Drucker",     "\n", 
+        "TV",         "AMP",         ""
     };
     lv_btnmatrix_set_map(matrix, btnm_map);
     lv_obj_add_event_cb(matrix, ui_event_Button, LV_EVENT_CLICKED, NULL);
