@@ -14,7 +14,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 			break;
 		case WStype_CONNECTED:
 			ui_writeLog("[WSc] Connected");
-			webSocket.sendTXT("Connected");
+			//webSocket.sendTXT("Connected");
 			break;
 		case WStype_TEXT:
 			ui_writeLog("[WSc] get text");
@@ -35,8 +35,10 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 }
 
 void init_websocket_client() {
-    webSocket.begin("192.168.178.69", 8090, "/ws");
+    webSocket.begin("192.168.178.69", 8090, "/subscribe");
     webSocket.onEvent(webSocketEvent);
+	webSocket.setReconnectInterval(5000);
+	webSocket.setExtraHeaders(); // remove "Origin: file://" header because it breaks the connection with "nhooyr.io/websocket"
 }
 
 void loop_websocket_client() {
